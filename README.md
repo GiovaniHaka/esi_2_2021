@@ -10,7 +10,14 @@ Pety: projeto da disciplina Engenharia de Sistemas de Informação - ACH2006
 
 2. Assim que instalado, clone este reposítório!
 
-3. Na pasta raiz do repositório esceute o comando:
+3. Na pasta raiz do repositório execute o comando:
 ```
 flutter pub get
+```
+
+4. Abra seu emulador ou conecte um dispositivo, de preferência Android, à sua máquina!
+
+5. Execute o camando:
+```
+flutter run
 ```
