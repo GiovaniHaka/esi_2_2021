@@ -4,13 +4,13 @@ Pety: projeto da disciplina Engenharia de Sistemas de Informação - ACH2006
 
 ## Getting Started
 
-Este projeto consiste em uma aplicação mobile, desenvolvida em Flutter
+> Este projeto consiste em uma aplicação mobile, desenvolvida em Flutter
 
-Para executar este projeto em sua máquina, siga os passos de instalação do Flutter [aqui!](https://flutter.dev/docs/get-started/install)
+1. Para executar este projeto em sua máquina, siga os passos de instalação do Flutter [aqui!](https://flutter.dev/docs/get-started/install)
 
-Assim que instalado, clone este reposítório!
+2. Assim que instalado, clone este reposítório!
 
-Na pasta raiz do repositório esceute o comando:
+3. Na pasta raiz do repositório esceute o comando:
 ```
 flutter pub get
 ```
