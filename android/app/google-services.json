@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "595453389747",
+    "project_id": "pety-5a26b",
+    "storage_bucket": "pety-5a26b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595453389747:android:89561258ec16bda5be39c6",
+        "android_client_info": {
+          "package_name": "com.example.esi_2_2021"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "595453389747-cfjntfl7pk47htnfil73vsg68t4aosig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL6Rbc7bXKqVgFY2AhdJjrolAft9l23jI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "595453389747-cfjntfl7pk47htnfil73vsg68t4aosig.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
