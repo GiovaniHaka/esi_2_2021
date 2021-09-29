@@ -1,6 +1,7 @@
-import 'package:esi_2_2021/screens/add_pet/add_pet_screen.dart';
+import 'package:esi_2_2021/services/auth/auth.dart';
+import 'package:esi_2_2021/services/url_launch/url_whatsapp.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,6 +12,15 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Pety'),
         centerTitle: true,
+        actions: [
+          CupertinoButton(
+            child: Text(
+              'Sair',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => AuthService().signOut(),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(10),
@@ -22,32 +32,9 @@ class HomeScreen extends StatelessWidget {
             ),
             Divider(),
             ElevatedButton(
-              onPressed: () => Get.to(AddPetScreen()),
-              child: Text('Adicionar Pet!'),
+              onPressed: () => UrlLaunch().callSupport(),
+              child: Text('Ligar para suporte!'),
             ),
-            Divider(),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.only(bottom: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text('Nome:'),
-                        Text('Tipo:'),
-                        Text('Raça:'),
-                      ],
-                    ),
-                  );
-                })
           ],
         ),
       ),

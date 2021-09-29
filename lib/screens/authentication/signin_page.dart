@@ -1,6 +1,8 @@
-import 'package:esi_2_2021/services/auth.dart';
+import 'package:esi_2_2021/screens/authentication/reset_password_screen.dart';
+import 'package:esi_2_2021/services/auth/auth.dart';
 import 'package:esi_2_2021/widgets/auth_text_input.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SignIn extends StatefulWidget {
   final Function()? tapChangePage;
@@ -38,31 +40,36 @@ class _SignInState extends State<SignIn> {
                     ),
                     child: Text(
                       'Entrar',
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  AuthTextFormField(
-                    labelText: 'Email',
-                    initialValue: _email,
-                    keyboardType: TextInputType.emailAddress,
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                    ),
                     onChanged: (val) {
                       setState(() => _email = val);
                     },
                     validator: (val) {
-                      if (val!.isEmpty) return 'Insira seu endereço de email!';
-                      return '';
+                      if (val == null || val.isEmpty)
+                        return 'Insira seu endereço de email!';
+                      return null;
                     },
                   ),
                   Divider(),
-                  AuthTextFormField(
-                    labelText: 'Senha',
-                    haveEyeIcon: true,
-                    keyboardType: TextInputType.visiblePassword,
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Senha',
+                    ),
+                    obscureText: true,
                     onChanged: (val) {
                       setState(() => _password = val);
                     },
                     validator: (val) {
-                      if (val!.isEmpty) return 'Insira sua senha!';
-                      return '';
+                      if (val == null || val.isEmpty)
+                        return 'Insira sua senha!';
+                      return null;
                     },
                   ),
                   _errorToLogin!.isEmpty
@@ -77,7 +84,7 @@ class _SignInState extends State<SignIn> {
                         ),
                   Divider(),
                   TextButton(
-                    child: Text('entrar'),
+                    child: Text('Entrar'),
                     onPressed: () async {
                       if (_formSignInKey.currentState!.validate()) {
                         setState(() => _loading = true);
@@ -106,7 +113,11 @@ class _SignInState extends State<SignIn> {
                   TextButton(
                     child: Text('Não possui uma conta? Cadastre-se'),
                     onPressed: this.widget.tapChangePage,
-                  )
+                  ),
+                  TextButton(
+                    child: Text('Esqueci minha senha'),
+                    onPressed: () => Get.to(ResetPasswordScreen()),
+                  ),
                 ],
               ),
             ),

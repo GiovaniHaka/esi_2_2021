@@ -1,4 +1,5 @@
 import 'package:esi_2_2021/models/firebaseUser.dart';
+import 'package:esi_2_2021/screens/wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
@@ -101,13 +102,26 @@ class AuthService {
     }
   }
 
-  // /// Sign out
-  // Future signOut() async {
-  //   try {
-  //     return await _auth.signOut().then((value) => Get.offAll(Wrapper()));
-  //   } catch (e) {
-  //     print('$e');
-  //     return null;
-  //   }
-  // }
+  /// Sign out
+  Future signOut() async {
+    try {
+      return await _auth.signOut().then((value) => Get.offAll(Wrapper()));
+    } catch (e) {
+      print('$e');
+      return null;
+    }
+  }
+
+  /// Reset user password
+  Future<bool> resetUserPassword(String email) async {
+    try {
+      await _auth
+          .sendPasswordResetEmail(email: email)
+          .then((value) => print('Email reset password sended'));
+      return true;
+    } catch (e) {
+      print('$e');
+      return false;
+    }
+  }
 }

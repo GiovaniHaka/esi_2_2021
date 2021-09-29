@@ -1,4 +1,4 @@
-import 'package:esi_2_2021/services/auth.dart';
+import 'package:esi_2_2021/services/auth/auth.dart';
 import 'package:esi_2_2021/widgets/auth_text_input.dart';
 import 'package:flutter/material.dart';
 
@@ -38,31 +38,37 @@ class _SignUpState extends State<SignUp> {
                     ),
                     child: Text(
                       'Cadastrar',
+                      style: Theme.of(context).textTheme.headline6,
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  AuthTextFormField(
-                    labelText: 'Email',
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                    ),
                     initialValue: _email,
-                    keyboardType: TextInputType.emailAddress,
                     onChanged: (val) {
                       setState(() => _email = val);
                     },
                     validator: (val) {
-                      if (val!.isEmpty) return 'Insira seu endereço de email!';
-                      return '';
+                      if (val == null || val.isEmpty)
+                        return 'Insira um endereço de email válido!';
+                      return null;
                     },
                   ),
                   Divider(),
-                  AuthTextFormField(
-                    labelText: 'Senha',
-                    haveEyeIcon: true,
-                    keyboardType: TextInputType.visiblePassword,
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Senha',
+                    ),
+                    obscureText: true,
                     onChanged: (val) {
                       setState(() => _password = val);
                     },
                     validator: (val) {
-                      if (val!.isEmpty) return 'Insira sua senha!';
-                      return '';
+                      if (val == null || val.isEmpty)
+                        return 'Insira sua senha!';
+                      return null;
                     },
                   ),
                   _errorToLogin!.isEmpty
@@ -77,13 +83,16 @@ class _SignUpState extends State<SignUp> {
                         ),
                   Divider(),
                   TextButton(
-                    child: Text('entrar'),
+                    child: Text('Cadastrar'),
                     onPressed: () async {
+                      print(_email);
+                      print(_password);
                       if (_formSignInKey.currentState!.validate()) {
                         setState(() => _loading = true);
-                        dynamic result = await _auth.signInWithEmailAndPassword(
-                          _email!,
-                          _password!,
+                        dynamic result =
+                            await _auth.registerWithEmailAndPassword(
+                          email: _email!,
+                          password: _password!,
                         );
                         if (result['user'] == null) {
                           if (result['authException'] != null) {
@@ -104,7 +113,7 @@ class _SignUpState extends State<SignUp> {
                     },
                   ),
                   TextButton(
-                    child: Text('Não possui uma conta? Cadastre-se'),
+                    child: Text('Possui conta? Entre'),
                     onPressed: this.widget.tapChangePage,
                   )
                 ],
