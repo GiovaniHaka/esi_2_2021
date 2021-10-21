@@ -32,8 +32,13 @@ class HomeScreen extends StatelessWidget {
             ),
             Divider(),
             ElevatedButton(
-              onPressed: () => UrlLaunch().callSupport(),
+              onPressed: () => UrlLaunch.callSupport(),
               child: Text('Ligar para suporte!'),
+            ),
+            Divider(),
+            ElevatedButton(
+              onPressed: () async => await UrlLaunch.openWhatsApp(),
+              child: Text('Mandar mensagem para suporte!'),
             ),
           ],
         ),
