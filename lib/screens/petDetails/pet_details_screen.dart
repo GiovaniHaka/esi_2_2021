@@ -1,32 +1,46 @@
 import 'package:esi_2_2021/models/pet.dart';
-import 'package:esi_2_2021/screens/addPet/add_pet_screen.dart';
+import 'package:esi_2_2021/models/vaccine.dart';
+import 'package:esi_2_2021/screens/addVaccine/add_vaccine_screen.dart';
 import 'package:esi_2_2021/screens/home/components/pet_card.dart';
-import 'package:esi_2_2021/screens/home/home_screen_controller.dart';
-import 'package:esi_2_2021/screens/petDetails/pet_details_screen.dart';
-import 'package:esi_2_2021/services/auth/auth.dart';
+import 'package:esi_2_2021/screens/home/home_screen.dart';
+import 'package:esi_2_2021/screens/petDetails/components/vaccine_card.dart';
+import 'package:esi_2_2021/screens/petDetails/pet_details_controller.dart';
 import 'package:esi_2_2021/services/database/pet.dart';
-import 'package:esi_2_2021/services/url_launch/url_whatsapp.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class PetDetailsScreen extends StatefulWidget {
+  final Pet pet;
+  const PetDetailsScreen({Key? key, required this.pet}) : super(key: key);
 
+  @override
+  _PetDetailsScreenState createState() => _PetDetailsScreenState();
+}
+
+class _PetDetailsScreenState extends State<PetDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pety'),
-        centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.white),
         actions: [
-          CupertinoButton(
-            child: Text(
-              'Sair',
-              style: TextStyle(color: Colors.white),
+          IconButton(
+            onPressed: () {
+              PetRepository.deletePet(widget.pet.id);
+              Get.offAll(HomeScreen());
+            },
+            icon: Icon(
+              Icons.delete,
             ),
-            onPressed: () => AuthService().signOut(),
-          )
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() {});
+            },
+            icon: Icon(
+              Icons.refresh,
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -34,27 +48,15 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Center(
-              child: Text('Bem vindo ao pety!'),
-            ),
-            Divider(),
+            PetCard(pet: widget.pet),
+            SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () => Get.to(AddPetScreen()),
-              child: Text('Adicionar Pet!'),
-            ),
-            Divider(),
-            ElevatedButton(
-              onPressed: () => UrlLaunch.callSupport(),
-              child: Text('Ligar para suporte!'),
-            ),
-            Divider(),
-            ElevatedButton(
-              onPressed: () async => await UrlLaunch.openWhatsApp(),
-              child: Text('Mandar mensagem para suporte!'),
+              onPressed: () => Get.to(AddVaccineScreen(pet: widget.pet)),
+              child: Text('Adicionar Vacina!'),
             ),
             FutureBuilder(
-              future: HomeController.getActivePets(),
-              builder: (context, AsyncSnapshot<List<Pet>> snapshot) {
+              future: PetDetailsController.getVaccines(widget.pet.id),
+              builder: (context, AsyncSnapshot<List<Vaccine>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 }
@@ -65,7 +67,7 @@ class HomeScreen extends StatelessWidget {
 
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {
-                    List<Pet> pets = snapshot.data!;
+                    List<Vaccine> pets = snapshot.data!;
                     return Container(
                       margin: EdgeInsets.symmetric(vertical: 10),
                       child: ListView.separated(
@@ -78,11 +80,8 @@ class HomeScreen extends StatelessWidget {
                           );
                         },
                         itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () =>
-                                Get.to(PetDetailsScreen(pet: pets[index])),
-                            child: PetCard(pet: pets[index]),
-                          );
+                          return VaccineCard(
+                              pet: widget.pet, vaccine: pets[index]);
                         },
                       ),
                     );
